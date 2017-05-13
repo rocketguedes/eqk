@@ -97,17 +97,21 @@ func main() {
 		log.Println(err)
 	}
 
-	fmt.Println("Terremotos significativos nos últimos 30 dias:")
-	fmt.Println("Numero de terremotos = ", record.Metadata.Count)
-
+	fmt.Println("Terremotos acima de 6 graus na escala Richter, nos últimos 30 dias:")
+	fmt.Println("------------------------------------------------")
+	
 	var i int
 
 	for i = 0; i < record.Metadata.Count; i++ {
-			fmt.Println("Terremoto #",i+1)
-			fmt.Println("Epicentro = ", record.Features[i].Properties.Place)
-			fmt.Println("Magnitude: ", record.Features[i].Properties.Mag)
-			fmt.Println("------------------------------------------------")
-			//fmt.Println("Fuso horário: ", record.Features[i].Properties.Tz)
-			//fmt.Println("Horário: ", record.Features[i].Properties.Time)
+
+			j := record.Features[i].Properties.Mag
+
+			if ( j > 6){
+				fmt.Println("Epicentro = ", record.Features[i].Properties.Place)
+				fmt.Println("Magnitude: ", record.Features[i].Properties.Mag)
+				fmt.Println("------------------------------------------------")
+				//fmt.Println("Fuso horário: ", record.Features[i].Properties.Tz)
+				//fmt.Println("Horário: ", record.Features[i].Properties.Time)
+			}
 	}
 }
