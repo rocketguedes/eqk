@@ -69,7 +69,6 @@ func main() {
 	req, err := http.NewRequest("GET", url, nil)
 	if err != nil {
 		log.Fatal("NewRequest: ", err)
-		return
 	}
 
 	// For control over HTTP client headers,
@@ -99,8 +98,9 @@ func main() {
 		log.Println(err)
 	}
 
+	fmt.Println("-------------------------------------------------------------------")
 	fmt.Println("Terremotos acima de 6 graus na escala Richter, nos últimos 30 dias:")
-	fmt.Println("------------------------------------------------")
+	fmt.Println("-------------------------------------------------------------------")
 
 	for i := 0; i < record.Metadata.Count; i++ {
 
@@ -109,7 +109,7 @@ func main() {
 		if j > 6 {
 			fmt.Println("Epicentro =", record.Features[i].Properties.Place)
 			fmt.Println("Magnitude:", record.Features[i].Properties.Mag)
-			fmt.Println("------------------------------------------------")
+			fmt.Println("-------------------------------------------------------------------")
 		}
 	}
 }
