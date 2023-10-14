@@ -12,7 +12,7 @@ import (
 	"net/http"
 )
 
-type terremoto struct {
+type terremotoData struct {
 	Type     string `json:"type"`
 	Metadata struct {
 		Generated int64  `json:"generated"`
@@ -62,7 +62,7 @@ type terremoto struct {
 }
 
 func main() {
-	// JSON URL
+	// API endpoint
 	url := fmt.Sprintf("https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/significant_month.geojson")
 
 	// Build the request
@@ -91,10 +91,10 @@ func main() {
 	defer resp.Body.Close()
 
 	// Fill the record with the data from the JSON
-	var record terremoto
+	var terremotos terremotoData
 
 	// Use json.Decode for reading streams of JSON data
-	if err := json.NewDecoder(resp.Body).Decode(&record); err != nil {
+	if err := json.NewDecoder(resp.Body).Decode(&terremotos); err != nil {
 		log.Println(err)
 	}
 
@@ -102,13 +102,13 @@ func main() {
 	fmt.Println("Terremotos acima de 6 graus na escala Richter, nos últimos 30 dias:")
 	fmt.Println("-------------------------------------------------------------------")
 
-	for i := 0; i < record.Metadata.Count; i++ {
+	for item := 0; item < terremotos.Metadata.Count; item++ {
 
-		j := record.Features[i].Properties.Mag
+		magnitude := terremotos.Features[item].Properties.Mag
 
-		if j > 6 {
-			fmt.Println("Epicentro =", record.Features[i].Properties.Place)
-			fmt.Println("Magnitude:", record.Features[i].Properties.Mag)
+		if magnitude > 6 {
+			fmt.Println("Epicentro =", terremotos.Features[item].Properties.Place)
+			fmt.Println("Magnitude:", terremotos.Features[item].Properties.Mag)
 			fmt.Println("-------------------------------------------------------------------")
 		}
 	}
