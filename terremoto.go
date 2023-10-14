@@ -10,6 +10,7 @@ import (
 	"fmt"
 	"log"
 	"net/http"
+	"time"
 )
 
 type Metadata struct {
@@ -22,44 +23,44 @@ type Metadata struct {
 }
 type terremotoData struct {
 	Type     string
-	Meta     Metadata
+	Meta     Metadata `json:"metadata"`
 	Features []struct {
-		Type       string
+		Type       string `json:"type"`
 		Properties struct {
-			Mag     float64
-			Place   string
-			Time    int64
-			Updated int64
-			Tz      int
-			URL     string
-			Detail  string
-			Felt    int
-			Cdi     float64
-			Mmi     float64
-			Alert   string
-			Status  string
-			Tsunami int
-			Sig     int
-			Net     string
-			Code    string
-			Ids     string
-			Sources string
-			Types   string
-			Nst     interface{}
-			Dmin    float64
-			Rms     float64
-			Gap     int
-			MagType string
-			Type    string
-			Title   string
-		}
+			Mag     float64     `json:"mag"`
+			Place   string      `json:"place"`
+			Time    int64       `json:"time"`
+			Updated int64       `json:"updated"`
+			Tz      int         `json:"tz"`
+			URL     string      `json:"url"`
+			Detail  string      `json:"detail"`
+			Felt    int         `json:"felt"`
+			Cdi     float64     `json:"cdi"`
+			Mmi     float64     `json:"mmi"`
+			Alert   string      `json:"alert"`
+			Status  string      `json:"status"`
+			Tsunami int         `json:"tsunami"`
+			Sig     int         `json:"sig"`
+			Net     string      `json:"net"`
+			Code    string      `json:"code"`
+			Ids     string      `json:"ids"`
+			Sources string      `json:"sources"`
+			Types   string      `json:"types"`
+			Nst     interface{} `json:"nst"`
+			Dmin    float64     `json:"dmin"`
+			Rms     float64     `json:"rms"`
+			Gap     int         `json:"gap"`
+			MagType string      `json:"magType"`
+			Type    string      `json:"type"`
+			Title   string      `json:"title"`
+		} `json:"properties"`
 		Geometry struct {
-			Type        string
-			Coordinates []float64
-		}
-		ID string
-	}
-	Bbox []float64
+			Type        string    `json:"type"`
+			Coordinates []float64 `json:"coordinates"`
+		} `json:"geometry"`
+		ID string `json:"id"`
+	} `json:"features"`
+	Bbox []float64 `json:"bbox"`
 }
 
 func main() {
@@ -100,16 +101,22 @@ func main() {
 	}
 
 	fmt.Println("-------------------------------------------------------------------")
-	fmt.Println("Terremotos acima de 6 graus na escala Richter, nos últimos 30 dias:")
+	fmt.Println(" Terremotos acima de 6 graus na escala Richter, nos últimos 30 dias:")
 	fmt.Println("-------------------------------------------------------------------")
 
-	for item := 0; item < terremotos.Meta.Count; item++ {
+	totTerremotos := terremotos.Meta.Count
+
+	for item := 0; item < totTerremotos; item++ {
 
 		magnitude := terremotos.Features[item].Properties.Mag
 
 		if magnitude > 6 {
 			fmt.Println("Epicentro =", terremotos.Features[item].Properties.Place)
 			fmt.Println("Magnitude:", terremotos.Features[item].Properties.Mag)
+
+			t := time.UnixMilli(terremotos.Features[item].Properties.Time)
+			fmt.Println("Time:", t.UTC())
+
 			fmt.Println("-------------------------------------------------------------------")
 		}
 	}
