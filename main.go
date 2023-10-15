@@ -10,6 +10,8 @@ import (
 	"fmt"
 	"log"
 	"net/http"
+	"os"
+	"strconv"
 	"time"
 )
 
@@ -42,7 +44,19 @@ type Earthquake struct {
 	} `json:"features"`
 }
 
+// Program will display Eartjquates with magnitured > minimumMagnitude
+var minimumMagnitude float64
+
 func main() {
+
+	minimumMagnitude = 0
+
+	if len(os.Args[1:]) > 0 {
+		if n, err := strconv.ParseFloat(os.Args[1], 64); err == nil {
+			minimumMagnitude = n
+		}
+	}
+
 	// Fetch earthquake data from the API
 	earthquakeData, err := fetchEarthquakeData()
 	if err != nil {
@@ -50,14 +64,14 @@ func main() {
 	}
 
 	fmt.Println("-------------------------------------------------------------------")
-	fmt.Println(" Terremotos acima de 6 graus na escala Richter, nos últimos 30 dias:")
+	fmt.Printf(" Terremotos acima de %f graus na escala Richter, nos últimos 30 dias:\n", minimumMagnitude)
 	fmt.Println("-------------------------------------------------------------------")
 
 	for _, feature := range earthquakeData.Features {
 
 		magnitude := feature.Properties.Mag
 
-		if magnitude > 6 {
+		if magnitude > minimumMagnitude {
 			fmt.Println("Epicentro =", feature.Properties.Place)
 			fmt.Println("Magnitude:", magnitude)
 
