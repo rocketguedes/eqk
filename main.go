@@ -1,6 +1,6 @@
-// Programa em Go para listar os terremotos acima de 6 graus nos últimos 30 dias.
-// Fonte dos dados: https://earthquake.usgs.gov/ - USGS
-// Autor: Marcelo Pinheiro - [Twitter](http://twitter.com/mpinheir)
+// This Go program fetches and displas Earthquake data.
+// Data source: https://earthquake.usgs.gov/ - USGS
+// Author: Marcelo Pinheiro - [Twitter](http://twitter.com/mpinheir)
 //---------------------------------------------------------------------------------------
 
 package main
@@ -44,7 +44,7 @@ type Earthquake struct {
 	} `json:"features"`
 }
 
-// Program will display Eartjquates with magnitured > minimumMagnitude
+// Program will display Eartjquates with magnitude > minimumMagnitude
 var minimumMagnitude float64
 
 func main() {
@@ -64,7 +64,7 @@ func main() {
 	}
 
 	fmt.Println("-------------------------------------------------------------------")
-	fmt.Printf(" Terremotos acima de %f graus na escala Richter, nos últimos 30 dias:\n", minimumMagnitude)
+	fmt.Printf(" Earthquake above %f degrees, in the last 30 dias:\n", minimumMagnitude)
 	fmt.Println("-------------------------------------------------------------------")
 
 	for _, feature := range earthquakeData.Features {
@@ -72,7 +72,7 @@ func main() {
 		magnitude := feature.Properties.Mag
 
 		if magnitude > minimumMagnitude {
-			fmt.Println("Epicentro =", feature.Properties.Place)
+			fmt.Println("Epicenter =", feature.Properties.Place)
 			fmt.Println("Magnitude:", magnitude)
 
 			t := time.UnixMilli(feature.Properties.Time)
