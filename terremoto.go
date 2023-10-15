@@ -26,46 +26,20 @@ type Metadata struct {
 	Count     int    `json:"count"`
 }
 
+// Earthquake represents earthquake data.
 type Earthquake struct {
-	Type     string
-	Meta     Metadata `json:"metadata"`
+	Type     string `json:"type"`
+	Meta     Metadata
 	Features []struct {
 		Type       string `json:"type"`
 		Properties struct {
-			Mag     float64     `json:"mag"`
-			Place   string      `json:"place"`
-			Time    int64       `json:"time"`
-			Updated int64       `json:"updated"`
-			Tz      int         `json:"tz"`
-			URL     string      `json:"url"`
-			Detail  string      `json:"detail"`
-			Felt    int         `json:"felt"`
-			Cdi     float64     `json:"cdi"`
-			Mmi     float64     `json:"mmi"`
-			Alert   string      `json:"alert"`
-			Status  string      `json:"status"`
-			Tsunami int         `json:"tsunami"`
-			Sig     int         `json:"sig"`
-			Net     string      `json:"net"`
-			Code    string      `json:"code"`
-			Ids     string      `json:"ids"`
-			Sources string      `json:"sources"`
-			Types   string      `json:"types"`
-			Nst     interface{} `json:"nst"`
-			Dmin    float64     `json:"dmin"`
-			Rms     float64     `json:"rms"`
-			Gap     int         `json:"gap"`
-			MagType string      `json:"magType"`
-			Type    string      `json:"type"`
-			Title   string      `json:"title"`
+			Mag     float64 `json:"mag"`
+			Place   string  `json:"place"`
+			Time    int64   `json:"time"`
+			Updated int64   `json:"updated"`
+			Tz      int     `json:"tz"`
 		} `json:"properties"`
-		Geometry struct {
-			Type        string    `json:"type"`
-			Coordinates []float64 `json:"coordinates"`
-		} `json:"geometry"`
-		ID string `json:"id"`
 	} `json:"features"`
-	Bbox []float64 `json:"bbox"`
 }
 
 func main() {
