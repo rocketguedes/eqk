@@ -79,17 +79,15 @@ func main() {
 	fmt.Println(" Terremotos acima de 6 graus na escala Richter, nos últimos 30 dias:")
 	fmt.Println("-------------------------------------------------------------------")
 
-	totTerremotos := earthquakeData.Meta.Count
+	for _, feature := range earthquakeData.Features {
 
-	for item := 0; item < totTerremotos; item++ {
-
-		magnitude := earthquakeData.Features[item].Properties.Mag
+		magnitude := feature.Properties.Mag
 
 		if magnitude > 6 {
-			fmt.Println("Epicentro =", earthquakeData.Features[item].Properties.Place)
-			fmt.Println("Magnitude:", earthquakeData.Features[item].Properties.Mag)
+			fmt.Println("Epicentro =", feature.Properties.Place)
+			fmt.Println("Magnitude:", magnitude)
 
-			t := time.UnixMilli(earthquakeData.Features[item].Properties.Time)
+			t := time.UnixMilli(feature.Properties.Time)
 			fmt.Println("Time:", t.UTC())
 
 			fmt.Println("-------------------------------------------------------------------")
