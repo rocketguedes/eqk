@@ -16,15 +16,17 @@ import (
 // EarthquakeAPIURL is the URL for earthquake data.
 const EarthquakeAPIURL = "https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/significant_month.geojson"
 
+// Metadata contains metadata information.
 type Metadata struct {
-	Generated int64
-	URL       string
-	Title     string
-	Status    int
-	API       string
-	Count     int
+	Generated int64  `json:"generated"`
+	URL       string `json:"url"`
+	Title     string `json:"title"`
+	Status    int    `json:"status"`
+	API       string `json:"api"`
+	Count     int    `json:"count"`
 }
-type terremotoData struct {
+
+type Earthquake struct {
 	Type     string
 	Meta     Metadata `json:"metadata"`
 	Features []struct {
@@ -67,57 +69,55 @@ type terremotoData struct {
 }
 
 func main() {
-	// Build the request
-	req, err := http.NewRequest("GET", EarthquakeAPIURL, nil)
+	// Fetch earthquake data from the API
+	earthquakeData, err := fetchEarthquakeData()
 	if err != nil {
-		log.Fatal("NewRequest: ", err)
-	}
-
-	// For control over HTTP client headers,
-	// redirect policy, and other settings,
-	// create a Client
-	// A Client is an HTTP client
-	client := &http.Client{}
-
-	// Send the request via a client
-	// Do sends an HTTP request and
-	// returns an HTTP response
-	resp, err := client.Do(req)
-	if err != nil {
-		log.Fatal("Fatal: ", err)
-	}
-
-	// Callers should close resp.Body
-	// when done reading from it
-	// Defer the closing of the body
-	defer resp.Body.Close()
-
-	// Fill the record with the data from the JSON
-	var terremotos terremotoData
-
-	// Use json.Decode for reading streams of JSON data
-	if err := json.NewDecoder(resp.Body).Decode(&terremotos); err != nil {
-		log.Println(err)
+		log.Fatal("Failed to fetch earthquake data:", err)
 	}
 
 	fmt.Println("-------------------------------------------------------------------")
 	fmt.Println(" Terremotos acima de 6 graus na escala Richter, nos últimos 30 dias:")
 	fmt.Println("-------------------------------------------------------------------")
 
-	totTerremotos := terremotos.Meta.Count
+	totTerremotos := earthquakeData.Meta.Count
 
 	for item := 0; item < totTerremotos; item++ {
 
-		magnitude := terremotos.Features[item].Properties.Mag
+		magnitude := earthquakeData.Features[item].Properties.Mag
 
 		if magnitude > 6 {
-			fmt.Println("Epicentro =", terremotos.Features[item].Properties.Place)
-			fmt.Println("Magnitude:", terremotos.Features[item].Properties.Mag)
+			fmt.Println("Epicentro =", earthquakeData.Features[item].Properties.Place)
+			fmt.Println("Magnitude:", earthquakeData.Features[item].Properties.Mag)
 
-			t := time.UnixMilli(terremotos.Features[item].Properties.Time)
+			t := time.UnixMilli(earthquakeData.Features[item].Properties.Time)
 			fmt.Println("Time:", t.UTC())
 
 			fmt.Println("-------------------------------------------------------------------")
 		}
 	}
+
+}
+
+func fetchEarthquakeData() (Earthquake, error) {
+	// Build the request
+	req, err := http.NewRequest("GET", EarthquakeAPIURL, nil)
+	if err != nil {
+		return Earthquake{}, err
+	}
+
+	// Create an HTTP client and send the request
+	client := &http.Client{}
+	resp, err := client.Do(req)
+	if err != nil {
+		return Earthquake{}, err
+	}
+	defer resp.Body.Close()
+
+	// Decode the JSON response into the Earthquake struct
+	var earthquakeData Earthquake
+	if err := json.NewDecoder(resp.Body).Decode(&earthquakeData); err != nil {
+		return Earthquake{}, err
+	}
+
+	return earthquakeData, nil
 }
