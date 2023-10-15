@@ -13,6 +13,9 @@ import (
 	"time"
 )
 
+// EarthquakeAPIURL is the URL for earthquake data.
+const EarthquakeAPIURL = "https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/significant_month.geojson"
+
 type Metadata struct {
 	Generated int64
 	URL       string
@@ -64,11 +67,8 @@ type terremotoData struct {
 }
 
 func main() {
-	// API endpoint
-	url := fmt.Sprintf("https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/significant_month.geojson")
-
 	// Build the request
-	req, err := http.NewRequest("GET", url, nil)
+	req, err := http.NewRequest("GET", EarthquakeAPIURL, nil)
 	if err != nil {
 		log.Fatal("NewRequest: ", err)
 	}
