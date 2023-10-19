@@ -3,7 +3,7 @@
 // Author: Marcelo Pinheiro - [Twitter](http://twitter.com/mpinheir)
 //---------------------------------------------------------------------------------------
 
-package main
+package earthquake
 
 import (
 	"encoding/json"
@@ -16,7 +16,7 @@ import (
 )
 
 // EarthquakeAPIURL is the URL for earthquake data.
-const EarthquakeAPIURL = "https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/significant_month.geojson"
+var EarthquakeAPIURL = "https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/significant_month.geojson"
 
 // Metadata contains metadata information.
 type Metadata struct {
@@ -44,7 +44,7 @@ type Earthquake struct {
 	} `json:"features"`
 }
 
-// Program will display Eartjquates with magnitude > minimumMagnitude
+// Program will display Earthquakes with magnitude > minimumMagnitude
 var minimumMagnitude float64
 
 func main() {
