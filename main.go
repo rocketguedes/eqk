@@ -64,7 +64,7 @@ func main() {
 	}
 
 	fmt.Println("-------------------------------------------------------------------")
-	fmt.Printf(" Earthquake above %f degrees, in the last 30 dias:\n", minimumMagnitude)
+	fmt.Printf("Earthquake above %f degrees, in the last 30 day:\n", minimumMagnitude)
 	fmt.Println("-------------------------------------------------------------------")
 
 	for _, feature := range earthquakeData.Features {
