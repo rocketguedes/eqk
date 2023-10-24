@@ -1,4 +1,4 @@
-package earthquake
+package main
 
 import (
 	"net/http"

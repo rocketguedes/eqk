@@ -3,7 +3,7 @@
 // Author: Marcelo Pinheiro - [Twitter](http://twitter.com/mpinheir)
 //---------------------------------------------------------------------------------------
 
-package earthquake
+package main
 
 import (
 	"encoding/json"
