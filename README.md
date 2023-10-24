@@ -34,10 +34,25 @@ Autor: [Marcelo Pinheiro](http://twitter.com/mpinheir)
 
     ```bash
     cd Terremoto-em-go
+    ```
 
-3. Run the program:
+3. Build binary:
     ```bash
-    go run main.go
+    go build
+    ```
+
+4. Run the program:
+    ```bash
+    go run main.go <arg>
+    ```
+    ex: ```go run main.go 6``` will display earthquake greater than 6 degrees
+
+5. Run the binary after building:
+    ```bash
+    eqk <arg>
+    ```
+    ex: ```eqk 5``` will display earthquake greater than 5 degrees
+
 
 ## Usage
 
