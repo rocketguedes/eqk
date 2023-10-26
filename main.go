@@ -57,6 +57,11 @@ func main() {
 		}
 	}
 
+	listquakes(minimumMagnitude)
+
+}
+
+func listquakes(minimumMagnitude float64) {
 	// Fetch earthquake data from the API
 	earthquakeData, err := fetchEarthquakeData()
 	if err != nil {
