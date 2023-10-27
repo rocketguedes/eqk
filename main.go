@@ -57,11 +57,11 @@ func main() {
 		}
 	}
 
-	listquakes(minimumMagnitude)
+	fmt.Println("Total number of Earthquakes: ", listquakes(minimumMagnitude))
 
 }
 
-func listquakes(minimumMagnitude float64) {
+func listquakes(minimumMagnitude float64) int {
 	// Fetch earthquake data from the API
 	earthquakeData, err := fetchEarthquakeData()
 	if err != nil {
@@ -71,6 +71,8 @@ func listquakes(minimumMagnitude float64) {
 	fmt.Println("-------------------------------------------------------------------")
 	fmt.Printf("Earthquake above %f degrees, in the last 30 day:\n", minimumMagnitude)
 	fmt.Println("-------------------------------------------------------------------")
+
+	totEarthquake := 0
 
 	for _, feature := range earthquakeData.Features {
 
@@ -84,9 +86,12 @@ func listquakes(minimumMagnitude float64) {
 			fmt.Println("Time:", t.UTC())
 
 			fmt.Println("-------------------------------------------------------------------")
+
+			totEarthquake++
 		}
 	}
 
+	return totEarthquake
 }
 
 func fetchEarthquakeData() (Earthquake, error) {
