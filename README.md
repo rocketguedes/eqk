@@ -49,9 +49,9 @@ Autor: [Marcelo Pinheiro](http://twitter.com/mpinheir)
 
 5. Run the binary after building:
     ```bash
-    eqk <arg>
+    ./eqk <arg>
     ```
-    ex: ```eqk 5``` will display earthquake greater than 5 degrees
+    ex: ```./eqk 5``` will display earthquake greater than 5 degrees
 
 
 ## Usage
