@@ -69,7 +69,7 @@ func listquakes(minimumMagnitude float64) int {
 	}
 
 	fmt.Println("-------------------------------------------------------------------")
-	fmt.Printf("Earthquake above %f degrees, in the last 30 day:\n", minimumMagnitude)
+	fmt.Printf("Earthquake above %.1f degrees, in the last 30 day:\n", minimumMagnitude)
 	fmt.Println("-------------------------------------------------------------------")
 
 	totEarthquake := 0
