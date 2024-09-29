@@ -1,6 +1,4 @@
-# Earthquake Data Fetcher in Go
-
-This Go program fetches and displas Earthquake data.
+# This application displays Earthquakes that ocurred in the last 30 days.
 
 Autor: [Marcelo Pinheiro](http://twitter.com/mpinheir)
 
@@ -36,7 +34,7 @@ Autor: [Marcelo Pinheiro](http://twitter.com/mpinheir)
     cd Terremoto-em-go
     ```
 
-3. Build binary:
+3. Build the binary:
     ```bash
     go build
     ```
@@ -45,31 +43,28 @@ Autor: [Marcelo Pinheiro](http://twitter.com/mpinheir)
     ```bash
     go run main.go <arg>
     ```
-    ex: ```go run main.go 6``` will display earthquake greater than 6 degrees
+    ex: ```go run main.go 6``` will display earthquake(s) greater than 6 degrees
 
 5. Run the binary after building:
     ```bash
     ./eqk <arg>
     ```
-    ex: ```./eqk 5``` will display earthquake greater than 5 degrees
+    ex: 
+    
+    ```./eqk 5``` will display earthquake(s) greater than 5 degrees
 
-
-## Usage
-
-The program fetches data from the USGS Earthquake API and displays information about them, including location, magnitude, and time.
-
-```bash
--------------------------------------------------------------------
-Earthquakes above 6 Richter scale in the last 30 days:
--------------------------------------------------------------------
-Epicenter = [Location]
-Magnitude: [Magnitude]
-Time: [Timestamp]
--------------------------------------------------------------------
-```
+    ```
+    -------------------------------------------------------------------
+    Earthquake(s) above 5.0 degrees, in the last 30 day:
+    -------------------------------------------------------------------
+    Epicenter = [Location]
+    Magnitude: [Magnitude]
+    Time: [Timestamp]
+    -------------------------------------------------------------------
+    ```
 
 ## Contributing
-Contributions to this project are welcome! Feel free to open issues and pull requests to suggest improvements, report bugs, or add new features.
+Contributions to this project are welcome! Plese feel free to open issues and pull requests to suggest improvements, report bugs, or add new features.
 
 ## License
 This project is licensed under the [MIT License](https://en.wikipedia.org/wiki/MIT_License).
