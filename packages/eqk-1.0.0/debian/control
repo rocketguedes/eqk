@@ -1,0 +1,16 @@
+Source: eqk
+Section: utils
+Priority: optional
+Maintainer: Marcelo Pinheiro <mpinheir@gmail.com>
+Standards-Version: 4.5.0
+Homepage: https://github.com/mpinheir/eqk
+Vcs-Git: https://github.com/mpinheir/eqk.git
+Vcs-Browser: https://github.com/mpinheir/eqk
+
+Package: eqk
+Architecture: any
+Depends: ${shlibs:Depends}, ${misc:Depends}
+Description: Application that displays earthquake information
+ EQK is a tool to help you find information about earthquakes.
+ It will list earthquakes that occurred in the last 30 days,
+ and allows you to filter by magnitude.

@@ -1,0 +1,33 @@
+#!/usr/bin/make -f
+# See debhelper(7) (uncomment to enable)
+# output every command that modifies files on the build system.
+#export DH_VERBOSE = 1
+
+# Go paths
+export GOROOT=/usr/lib/go-1.22
+export PATH := $(GOROOT)/bin:$(PATH)
+export GOCACHE := $(CURDIR)/.gocache
+export CFLAGS += -fPIE
+export LDFLAGS += -Wl,-pie
+export LDFLAGS += -Wl,-z,relro,-z,now
+
+%:
+	dh $@
+
+override_dh_auto_build:
+	dh_auto_build
+	dh_strip -a
+	go build -o eqk ../../main.go
+
+override_dh_auto_install:
+	install -D -m 0755 eqk $(CURDIR)/debian/eqk/usr/bin/eqk
+
+override_dh_auto_test:
+	go test ../..
+
+# Skip stripping debug symbols
+override_dh_strip:
+
+# Skip building debug package
+override_dh_dwz:
+override_dh_deb_debug_info:

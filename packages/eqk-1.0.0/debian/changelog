@@ -1,0 +1,15 @@
+eqk (1.0.0) unstable; urgency=medium
+
+  * Initial release.
+    - Implemented core functionality
+    - Added command-line interface
+
+ -- Marcelo Pinheiro <mpinheir@gmail.com>  Sun, 29 Sep 2024 12:00:00 +0000
+
+eqk (0.9.0-1) unstable; urgency=low
+
+  * Beta release.
+    - Completed main features
+    - Added unit tests
+
+ -- Marcelo Pinheiro <mpinheir@gmail.com>  Sat, 28 Sep 2024 10:00:00 +0000
