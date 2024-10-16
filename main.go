@@ -16,7 +16,7 @@ import (
 )
 
 // EarthquakeAPIURL is the URL for earthquake data.
-var EarthquakeAPIURL = "https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/significant_month.geojson"
+const EarthquakeAPIURL = "https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/significant_month.geojson"
 
 // Metadata contains metadata information.
 type Metadata struct {
@@ -44,54 +44,62 @@ type Earthquake struct {
 	} `json:"features"`
 }
 
-// Program will display Earthquakes with magnitude > minimumMagnitude
+// minimumMagnitude is the threshold for displaying earthquakes
 var minimumMagnitude float64
 
 func main() {
-
-	minimumMagnitude = 0
-
-	if len(os.Args[1:]) > 0 {
-		if n, err := strconv.ParseFloat(os.Args[1], 64); err == nil {
-			minimumMagnitude = n
-		}
-	}
-
-	fmt.Println("Total number of Earthquakes: ", listquakes(minimumMagnitude))
-
+	minimumMagnitude = parseMinimumMagnitude()
+	totalEarthquakes := listQuakes(minimumMagnitude)
+	fmt.Printf("Total number of Earthquakes: %d\n", totalEarthquakes)
 }
 
-func listquakes(minimumMagnitude float64) int {
-	// Fetch earthquake data from the API
+func parseMinimumMagnitude() float64 {
+	if len(os.Args) > 1 {
+		if n, err := strconv.ParseFloat(os.Args[1], 64); err == nil {
+			return n
+		}
+		log.Printf("Invalid magnitude provided, using default of 0")
+	}
+	return 0
+}
+
+func listQuakes(minimumMagnitude float64) int {
 	earthquakeData, err := fetchEarthquakeData()
 	if err != nil {
-		log.Fatal("Failed to fetch earthquake data:", err)
+		log.Fatalf("Failed to fetch earthquake data: %v", err)
 	}
 
 	fmt.Println("-------------------------------------------------------------------")
-	fmt.Printf("Earthquake(s) above %.1f degrees, in the last 30 day:\n", minimumMagnitude)
+	fmt.Printf("Earthquake(s) above %.1f degrees, in the last 30 days:\n", minimumMagnitude)
 	fmt.Println("-------------------------------------------------------------------")
 
-	totEarthquake := 0
+	totalEarthquakes := 0
 
 	for _, feature := range earthquakeData.Features {
-
-		magnitude := feature.Properties.Mag
-
-		if magnitude > minimumMagnitude {
-			fmt.Println("Epicenter =", feature.Properties.Place)
-			fmt.Println("Magnitude:", magnitude)
-
-			t := time.UnixMilli(feature.Properties.Time)
-			fmt.Println("Time:", t.UTC())
-
-			fmt.Println("-------------------------------------------------------------------")
-
-			totEarthquake++
+		if feature.Properties.Mag > minimumMagnitude {
+			printEarthquakeInfo(feature)
+			totalEarthquakes++
 		}
 	}
 
-	return totEarthquake
+	return totalEarthquakes
+}
+
+func printEarthquakeInfo(feature struct {
+	Type       string `json:"type"`
+	Properties struct {
+		Mag     float64 `json:"mag"`
+		Place   string  `json:"place"`
+		Time    int64   `json:"time"`
+		Updated int64   `json:"updated"`
+		Tz      int     `json:"tz"`
+	} `json:"properties"`
+}) {
+	fmt.Println("Epicenter =", feature.Properties.Place)
+	fmt.Printf("Magnitude: %.1f\n", feature.Properties.Mag)
+	t := time.UnixMilli(feature.Properties.Time)
+	fmt.Println("Time:", t.UTC())
+	fmt.Println("-------------------------------------------------------------------")
 }
 
 func fetchEarthquakeData() (Earthquake, error) {
