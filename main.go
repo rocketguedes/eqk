@@ -47,6 +47,11 @@ type Earthquake struct {
 // minimumMagnitude is the threshold for displaying earthquakes
 var minimumMagnitude float64
 
+const (
+	separator = "-------------------------------------------------------------------"
+	dateFormat = "2006-01-02 15:04:05 MST"
+)
+
 func main() {
 	minimumMagnitude = parseMinimumMagnitude()
 	totalEarthquakes := listQuakes(minimumMagnitude)
@@ -69,9 +74,9 @@ func listQuakes(minimumMagnitude float64) int {
 		log.Fatalf("Failed to fetch earthquake data: %v", err)
 	}
 
-	fmt.Println("-------------------------------------------------------------------")
-	fmt.Printf("Earthquake(s) above %.1f degrees, in the last 30 days:\n", minimumMagnitude)
-	fmt.Println("-------------------------------------------------------------------")
+	fmt.Println(separator)
+	fmt.Printf("Earthquake(s) with magnitude %.1f or higher in the last 30 days:\n", minimumMagnitude)
+	fmt.Println(separator)
 
 	totalEarthquakes := 0
 
@@ -95,11 +100,11 @@ func printEarthquakeInfo(feature struct {
 		Tz      int     `json:"tz"`
 	} `json:"properties"`
 }) {
-	fmt.Println("Epicenter =", feature.Properties.Place)
+	fmt.Printf("Epicenter: %s\n", feature.Properties.Place)
 	fmt.Printf("Magnitude: %.1f\n", feature.Properties.Mag)
 	t := time.UnixMilli(feature.Properties.Time)
-	fmt.Println("Time:", t.UTC())
-	fmt.Println("-------------------------------------------------------------------")
+	fmt.Printf("Time: %s\n", t.UTC().Format(dateFormat))
+	fmt.Println(separator)
 }
 
 func fetchEarthquakeData() (Earthquake, error) {
