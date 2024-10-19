@@ -48,8 +48,9 @@ packages/eqk_1.0.0_amd64.buildinfo
 .flatpak-builder/
 flatpak/
 
-
 # Temporarily ignored files for appimage-related packaging files
 appimage-update.yml
 
+# Temporarily ignored files for rpm-related packaging files
+eqk.spec
 
