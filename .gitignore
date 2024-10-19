@@ -43,3 +43,13 @@ packages/eqk_1.0.0-1_amd64.build
 packages/eqk_1.0.0_amd64.build
 packages/eqk_1.0.0_amd64.buildinfo
 
+# Temporarily ignored files for flapak-related packaging files
+.desktop
+.flatpak-builder/
+flatpak/
+
+
+# Temporarily ignored files for appimage-related packaging files
+appimage-update.yml
+
+
