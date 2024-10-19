@@ -1,4 +1,4 @@
-// This Go program fetches and displas Earthquake data.
+// This Go program fetches and displays Earthquake data.
 // Data source: https://earthquake.usgs.gov/ - USGS
 // Author: Marcelo Pinheiro - [Twitter](http://twitter.com/mpinheir)
 //---------------------------------------------------------------------------------------
