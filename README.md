@@ -26,12 +26,12 @@ Autor: [Marcelo Pinheiro](http://twitter.com/mpinheir)
 1. Clone the repository:
 
    ```bash
-   git clone https://github.com/mpinheir/Terremoto-em-go.git
+   git clone https://github.com/mpinheir/eqk.git
 
 2. Change into the project directory:
 
     ```bash
-    cd Terremoto-em-go
+    cd eqk
     ```
 
 3. Build the binary:
