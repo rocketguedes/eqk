@@ -26,32 +26,37 @@ Autor: [Marcelo Pinheiro](http://twitter.com/mpinheir)
 1. Clone the repository:
 
    ```bash
-   git clone https://github.com/mpinheir/Terremoto-em-go.git
+   git clone https://github.com/mpinheir/eqk.git
+   ```
 
 2. Change into the project directory:
 
     ```bash
-    cd Terremoto-em-go
+    cd eqk
     ```
 
 3. Build the binary:
+
     ```bash
     go build
     ```
 
 4. Run the program:
+
     ```bash
     go run main.go <arg>
     ```
-    ex: ```go run main.go 6``` will display earthquake(s) greater than 6 degrees
+
+    ex: `go run main.go 6` will display earthquake(s) greater than 6 degrees
 
 5. Run the binary after building:
+
     ```bash
     ./eqk <arg>
     ```
-    ex: 
-    
-    ```./eqk 5``` will display earthquake(s) greater than 5 degrees
+
+    ex: `./eqk 5` will display earthquake(s) greater than 5 degrees
+
 
     ```
     -------------------------------------------------------------------
