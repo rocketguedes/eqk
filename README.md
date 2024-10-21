@@ -21,7 +21,7 @@ Autor: [Marcelo Pinheiro](http://twitter.com/mpinheir)
 - Go installed on your machine
 - Internet connection to fetch earthquake data from the USGS API
 
-### Installation
+### Build
 
 1. Clone the repository:
 
